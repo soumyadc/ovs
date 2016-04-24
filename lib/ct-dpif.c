@@ -119,6 +119,7 @@ ct_dpif_flush(struct dpif *dpif, const uint16_t *zone)
             : EOPNOTSUPP);
 }
 
+/* Free memory held by 'entry'. */
 void
 ct_dpif_entry_uninit(struct ct_dpif_entry *entry)
 {
@@ -129,6 +130,9 @@ ct_dpif_entry_uninit(struct ct_dpif_entry *entry)
     }
 }
 
+/* Conntrack entry formatting. */
+
+/* Format conntrack 'entry' of 'type' to 'ds'. */
 void
 ct_dpif_format_entry(const struct ct_dpif_entry *entry, struct ds *ds,
                      bool verbose, bool print_stats)
@@ -183,6 +187,8 @@ ct_dpif_format_entry(const struct ct_dpif_entry *entry, struct ds *ds,
         ds_put_cstr(ds, ")");
     }
 }
+
+/* Formatters for the parts of the conntrack entries. */
 
 static void
 ct_dpif_format_ipproto(struct ds *ds, uint16_t ipproto)
@@ -278,6 +284,8 @@ static void
 ct_dpif_format_flags(struct ds *ds, const char *title, uint32_t flags,
                      const struct flags *table)
 {
+    bool first = true;
+
     if (title) {
         ds_put_cstr(ds, title);
     }
